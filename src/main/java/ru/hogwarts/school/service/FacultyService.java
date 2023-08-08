@@ -1,44 +1,38 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class FacultyService {
 
-    private final Map<Long, Faculty> faculties = new HashMap<>();
-    private Long idCount = 0L;
+    private final FacultyRepository facultyRepository;
+
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     public Faculty add (Faculty faculty){
-        faculty.setId(++idCount);
-        faculties.put(idCount,faculty);
-        return faculty;
+        return  facultyRepository.save(faculty);
     }
     public Faculty find (Long idCount) {
-        if (faculties.containsKey(idCount)) {
-            return faculties.get(idCount);
-        } else return null;
+        return facultyRepository.findById(idCount).get();
     }
     public Faculty update (Faculty faculty) {
-        if (!faculties.containsKey(faculty.getId())) {
-            return null;
-        }
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+        return  facultyRepository.save(faculty);
     }
-    public Faculty delete(Long idCount) {
-        if (faculties.containsKey(idCount)) {
-            return faculties.remove(idCount);
-        }
-        return null;
+    public void delete(Long idCount) {
+        facultyRepository.deleteById(idCount);
     }
-    public Map<Long, Faculty> filterByColor(String color) {
-        return faculties.entrySet().stream()
-                .filter((el) -> el.getValue().getColor().equals(color))
-                .collect(Collectors.toMap(Map.Entry::getKey, el -> el.getValue()));
+
+   public Collection<Faculty> findByColor(String color) {
+        return facultyRepository.findByColor(color);
     }
+
+
 }

@@ -1,46 +1,41 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Student;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
+
+import java.util.Collection;
+import java.util.List;
+
 
 @Service
 public class StudentService {
 
-    private final Map<Long, Student> students = new HashMap<>();
-    private Long idCount = 0L;
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student add (Student student){
-        student.setId(++idCount);
-        students.put(idCount,student);
-        return student;
+        return  studentRepository.save(student);
     }
     public Student find (Long idCount) {
-      if (students.containsKey(idCount)) {
-        return students.get(idCount);
-      } else return null;
+      return studentRepository.findById(idCount).get();
     }
   public Student update (Student student) {
-    if (!students.containsKey(student.getId())) {
-      return null;
-    }
-    students.put(student.getId(), student);
-    return student;
+      return  studentRepository.save(student);
   }
-  public Student delete(Long idCount) {
-    if (students.containsKey(idCount)) {
-      return students.remove(idCount);
-    }
-    return null;
+  public void delete(Long idCount) {
+    studentRepository.deleteById(idCount);
   }
-    public Map<Long, Student> filterByAge(int age) {
-        return students.entrySet().stream()
-                .filter(el -> el.getValue().getAge() == (age))
-                .collect(Collectors.toMap(el -> el.getKey(), el -> el.getValue()));
+
+    public Collection<Student> findByAge(int age) {
+      return studentRepository.findByAge(age);
     }
+
 
 }
 
