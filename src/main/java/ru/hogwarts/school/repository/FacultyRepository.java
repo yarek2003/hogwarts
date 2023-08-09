@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
   Collection<Faculty> findByColor(String color);
+  Collection<Faculty> findByColorIgnoreCaseOrNameIgnoreCase (String color, String name);
+  Faculty findByStudents_id(Long id);
 }
