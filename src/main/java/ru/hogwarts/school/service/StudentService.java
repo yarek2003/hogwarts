@@ -3,6 +3,7 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -35,7 +36,11 @@ public class StudentService {
     public Collection<Student> findByAge(int age) {
       return studentRepository.findByAge(age);
     }
-
-
+    public Collection<Student> findByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+    public Collection<Student> findStudentsByFaculty_Id(Long id){
+        return studentRepository.findStudentsByFaculty_Id(id);
+    }
 }
 
