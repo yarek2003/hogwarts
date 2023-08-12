@@ -48,9 +48,8 @@ public class FacultyController {
                                                                                      @RequestParam(required = false, name = "name") String name) {
         return ResponseEntity.ok(facultyService.findByColorIgnoreCaseOrNameIgnoreCase(color,name));
     }
-    @GetMapping("/findByStudentId")
-    public ResponseEntity<Faculty> findByStudent (@RequestParam Long id) {
-        Faculty result = facultyService.findByStudent(id);
-        return result == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(result);
+    @GetMapping("/getFacultyOfStudent")
+    public ResponseEntity<Faculty> getFacultyOfStudent(@RequestParam("studentId") long studentId) {
+        return ResponseEntity.ok(facultyService.getFacultyOfStudent(studentId));
     }
 }
