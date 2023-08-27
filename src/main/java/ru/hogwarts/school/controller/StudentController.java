@@ -29,8 +29,9 @@ public class StudentController {
         return studentService.add(student);
     }
 
-    @PutMapping
-    public Student update (@RequestBody Student student){
+    @PutMapping("/{id}")
+    public Student update(@RequestBody() Student student, @PathVariable() Long id) {
+        student.setId(id);
         return studentService.update(student);
     }
     @DeleteMapping("{id}")
@@ -44,7 +45,8 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findByAge(age));
     }
     @GetMapping("/findByAgeBetween")
-    public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam("minAge") int minAge,
+    public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam("minA" +
+            "ge") int minAge,
                                                                 @RequestParam("maxAge") int maxAge) {
 
         return ResponseEntity.ok(studentService.findByAgeBetween(minAge, maxAge));
