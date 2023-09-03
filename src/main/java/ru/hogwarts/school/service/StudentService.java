@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 @Service
 public class StudentService {
 
@@ -41,6 +42,18 @@ public class StudentService {
     }
     public Collection<Student> findStudentsByFaculty_Id(Long id){
         return studentRepository.findStudentsByFaculty_Id(id);
+    }
+
+    public int countStudents() {
+        return studentRepository.countStudents();
+    }
+
+    public int averageAgeOfStudents() {
+        return studentRepository.averageAgeOfStudents();
+    }
+
+    public List<Student> last5Students() {
+        return studentRepository.last5Students();
     }
 }
 
