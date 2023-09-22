@@ -88,7 +88,6 @@ public class StudentService {
                 .average()
                 .orElse(0);
     }
-
     public Integer testSpeedStream1() {
         int sum = Stream.iterate(1, a -> a + 1)
                 .limit(100_000_000)
