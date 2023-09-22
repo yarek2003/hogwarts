@@ -86,4 +86,14 @@ public class StudentController {
     public ResponseEntity<Integer> testSpeedStream2() {
         return ResponseEntity.ok(studentService.testSpeedStream2());
     }
+    @GetMapping("/list-of-students-thread")
+    public ResponseEntity<List<Student>> listOfStudentsThread() {
+        return ResponseEntity.ok(studentService.listOfStudentsThread());
+    }
+
+    @GetMapping("/list-of-students-sync")
+    public ResponseEntity<List<Student>> listOfStudentsSync() {
+        return ResponseEntity.ok(studentService.listOfStudentsSync());
+    }
+
 }

@@ -102,6 +102,51 @@ public class StudentService {
                 .reduce(0, (a, b) -> a + b);
         return sum;
     }
+
+    public List<Student> listOfStudentsThread() {
+        List<Student> studentList = studentRepository.findAll();
+
+        System.out.println(studentList.get(0).getName());
+        System.out.println(studentList.get(1).getName());
+
+        Thread thread2 = new Thread(() -> {
+            System.out.println(studentList.get(2).getName());
+            System.out.println(studentList.get(3).getName());
+        });
+
+        Thread thread3 = new Thread(() -> {
+            System.out.println(studentList.get(5).getName());
+            System.out.println(studentList.get(6).getName());
+        });
+        thread2.start();
+        thread3.start();
+
+        return studentList;
+    }
+
+
+    public List<Student> listOfStudentsSync() {
+        List<Student> listOfStudentsSync = studentRepository.findAll();
+        printSync(listOfStudentsSync, 0);
+        printSync(listOfStudentsSync, 1);
+
+        Thread thread2 = new Thread(() -> {
+            printSync(listOfStudentsSync, 2);
+            printSync(listOfStudentsSync, 3);
+        });
+        Thread thread3 = new Thread(() -> {
+            printSync(listOfStudentsSync, 3);
+            printSync(listOfStudentsSync, 4);
+
+        });
+        thread2.start();
+        thread3.start();
+        return listOfStudentsSync;
+    }
+
+    public synchronized void printSync(List<Student> students, int index) {
+        System.out.println(students.get(index).getName());
+    }
 }
 
 
