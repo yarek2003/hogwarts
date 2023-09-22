@@ -11,7 +11,8 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
-
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 @Service
@@ -67,5 +68,41 @@ public class StudentService {
         logger.info("Last 5 students were found");
         return studentRepository.last5Students();
     }
+
+    public List<String> studentsA() {
+        logger.info("Getting students name starting with A");
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .map(el -> el.getName().toUpperCase())
+                .filter(el -> el.startsWith("A"))
+                .sorted()
+                .toList();
+    }
+    public Double averageAge() {
+        logger.info("Getting students average age");
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0);
+    }
+
+    public Integer testSpeedStream1() {
+        int sum = Stream.iterate(1, a -> a + 1)
+                .limit(100_000_000)
+                .parallel()
+                .reduce(0, (a, b) -> a + b);
+        return sum;
+    }
+
+    public Integer testSpeedStream2() {
+        int sum = IntStream.iterate(1, a -> a + 1)
+                .limit(100_000_000)
+                .reduce(0, (a, b) -> a + b);
+        return sum;
+    }
 }
+
 

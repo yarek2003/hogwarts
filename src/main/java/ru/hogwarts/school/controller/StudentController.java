@@ -70,4 +70,21 @@ public class StudentController {
     public ResponseEntity<List<Student>> listOfStudents() {
         return ResponseEntity.ok(studentService.last5Students());
     }
+
+    @GetMapping("/students-a")
+    public ResponseEntity<List<String>> studentsA() {
+        return ResponseEntity.ok(studentService.studentsA());
+    }
+    @GetMapping("/average-age-stream")
+    public ResponseEntity<Double> averageAge() {
+        return ResponseEntity.ok(studentService.averageAge());
+    }
+    @GetMapping("/test-speed-stream1")
+    public ResponseEntity<Integer> testSpeedStream1() {
+        return ResponseEntity.ok(studentService.testSpeedStream1());
+    }
+    @GetMapping("/test-speed-stream2")
+    public ResponseEntity<Integer> testSpeedStream2() {
+        return ResponseEntity.ok(studentService.testSpeedStream2());
+    }
 }
