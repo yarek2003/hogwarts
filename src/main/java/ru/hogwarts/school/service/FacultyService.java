@@ -10,7 +10,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Scope("singleton")
@@ -54,4 +56,19 @@ public class FacultyService {
 
     }
 
+    public Collection<Faculty> findAll(){
+        logger.info("Finding all faculties");
+        return facultyRepository.findAll();
+    }
+    public String findLongestName(){
+        logger.info("Finding a faculty with the longest name");
+        Optional<Faculty> result = facultyRepository.findAll()
+                .stream()
+                .parallel()
+                .max(Comparator.comparingInt(el -> el.getName().length()));
+        if (result.isPresent()) {
+            return result.get().getName();
+        }
+        return "";
+    }
 }
